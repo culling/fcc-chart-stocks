@@ -20,9 +20,12 @@ router.get("/", function(req, res){
 });
 
 router.get("/stocks/:id", function(req, res){
-    stocks.lookup(req.params.id);
-    res.write("searching");
-    res.end();
+    stocks.lookup(req.params.id, function(found){
+        //console.log(found);
+        res.write( JSON.stringify(found,null,"\t") );
+        res.end();
+        
+    });
 })
 
 /*

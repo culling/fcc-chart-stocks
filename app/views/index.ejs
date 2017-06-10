@@ -49,9 +49,41 @@
         </script>
         <!-- Custom -->
         <script src="/js/SearchBar.js" type="text/babel"></script>
-        <!--script src="/js/tonight.js" type="text/babel" ></script-->
-        <script src="/js/place/Card.jsx" type="text/babel"></script>
-        <script src="/js/place/Place.jsx" type="text/babel" ></script>
+        <!-- script src="/js/tonight.js" type="text/babel" ></script-->
+        <!-- script src="/js/place/Card.jsx" type="text/babel"></script -->
+        <!-- script src="/js/place/Place.jsx" type="text/babel" ></script -->
+
+
+
+        
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+        <script type="text/javascript">
+$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+    // Create the chart
+    Highcharts.stockChart('stock-graph', {
+
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        title: {
+            text: 'AAPL Stock Price'
+        },
+
+        series: [{
+            name: 'AAPL',
+            data: data,
+            tooltip: {
+                valueDecimals: 2
+            }
+        }]
+    });
+});
+
+</script>
+
 
         <link rel="stylesheet"        href="/main.css">
 
@@ -61,19 +93,19 @@
         <div class="container">
         <%- include('./partials/header', {title: title}); %>
         <br />
-
+<!-- >
         <% if (!user) { %>
             <%- include('./partials/loggedOutBar'); %>
         <% } else { %>
             <%- include('./partials/navBar', {user: user}); %>        
         <% } %>
+< -->
 
-
-        <br />
+        <div id="stock-graph"></div>
         <div id="search-bar"></div>
 
-        <div id="place-container"></div>
         </div>
+
 
 
 

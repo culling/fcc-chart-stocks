@@ -4,7 +4,7 @@ var http = require("http");
 var https = require("https");
 
 
-exports.lookup = function(ticker){
+exports.lookup = function(ticker, callback){
     console.log(ticker);
  // var markit = require('node-markitondemand');
 //"https://www.google.com/finance/info?q=NASDAQ:AAPL"
@@ -46,17 +46,59 @@ One tricky bit with the first column (the date column) is the full and partial t
 
 //"http://www.google.com/finance/getprices?q=GOOG&x=NASD&i=86400&p=40Y&f=d,c,v,k,o,h,l&df=cpct&auto=0&ei=Ef6XUYDfCqSTiAKEMg"
 
+
+
+
+
+
+//https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?
+//http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/stock/demo/basic-line/
 var hostname = "www.google.com"
-var path = "/finance/getprices?q=" + ticker + "&x=NASD&i=86400&p=1Y&f=d,c&df=cpct&auto=0"
+var interval = 86400
+var path = "/finance/getprices?q=" + ticker + "&x=NASD&i="+ interval +"&p=1Y&f=d,c&df=cpct&auto=0"
   https.get({hostname: hostname, path: path},
-            function(response){
-              var body="";
-              response.on("data", function(data){
-                body += data;
-              });
-              response.on("end", function(){
-                console.log(body);
-              })
+  function(response){
+    var responseBody="";
+    response.on("data", function(data){
+      responseBody += data;
+    });
+    response.on("end", function(){
+      //console.log(responseBody[1]);
+      var lines = responseBody.split("\n");
+      var stockObjectArray  = [];
+
+      for(var i = 0; i < lines.length; i++){
+
+        //var newDateBaseTimeLine;
+        //var newDateBaseTime = 0;
+        if(lines[i][0] == "a" ) {
+          var newDateBaseTimeLine = lines[i];
+          var newDateBaseTime     = newDateBaseTimeLine.split(",")[0].replace("a","") ;
+          var intervalNumber = 0;
+          //console.log(newDateBaseTime);
+        }else{
+          var intervalNumber = lines[i].split(",")[0];
+        }
+
+        if (newDateBaseTime){
+          var newStockObject = {};
+          newStockObject.date   = Number.parseInt(newDateBaseTime) + (intervalNumber * interval);
+          newStockObject.value  = lines[i].split(",")[1];
+
+
+          if(newStockObject.value != undefined){
+            console.log(newStockObject);
+            var formattedArrayObject = [newStockObject.date, newStockObject.value];
+            //stockObjectArray.push(newStockObject);
+            stockObjectArray.push(formattedArrayObject);
+          }
+        }
+        
+      }
+      //console.log(i);
+
+      callback(stockObjectArray);
+    });
   })
 
 }
