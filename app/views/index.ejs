@@ -59,29 +59,39 @@
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
         <script type="text/javascript">
-$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-    // Create the chart
-    Highcharts.stockChart('stock-graph', {
+//$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+$.getJSON('/api/stocks/AAPL', function (AAPL) {
+    console.log(AAPL);
+    $.getJSON('/api/stocks/GOOG', function (GOOG) {
 
+        // Create the chart
+        Highcharts.stockChart('stock-graph', {
+            rangeSelector: {
+                selected: 1
+            },
 
-        rangeSelector: {
-            selected: 1
-        },
+            title: {
+                text: 'Stock Prices'
+            },
 
-        title: {
-            text: 'AAPL Stock Price'
-        },
-
-        series: [{
-            name: 'AAPL',
-            data: data,
-            tooltip: {
-                valueDecimals: 2
-            }
-        }]
+            series: [{
+                name: 'AAPL',
+                data: AAPL,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            },
+            {
+                name: 'GOOG',
+                data: GOOG,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }        
+            ]
+        });
     });
 });
-
 </script>
 
 

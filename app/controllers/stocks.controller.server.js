@@ -82,13 +82,15 @@ var path = "/finance/getprices?q=" + ticker + "&x=NASD&i="+ interval +"&p=1Y&f=d
 
         if (newDateBaseTime){
           var newStockObject = {};
-          newStockObject.date   = Number.parseInt(newDateBaseTime) + (intervalNumber * interval);
-          newStockObject.value  = lines[i].split(",")[1];
+          //
+          newStockObject.unixTime   = (Number.parseInt(newDateBaseTime) + (intervalNumber * interval)) ;
+          newStockObject.phpTime    = 1000 * newStockObject.unixTime;
+          newStockObject.value  = Number.parseInt(lines[i].split(",")[1]);
 
 
           if(newStockObject.value != undefined){
             console.log(newStockObject);
-            var formattedArrayObject = [newStockObject.date, newStockObject.value];
+            var formattedArrayObject = [newStockObject.phpTime, newStockObject.value];
             //stockObjectArray.push(newStockObject);
             stockObjectArray.push(formattedArrayObject);
           }
