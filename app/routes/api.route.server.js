@@ -13,15 +13,17 @@ var mongoExport = require("./../../config/mongo");
 //var passport    = require("passport");
 //var users       = require("./../controllers/user.controller.server");
 //var places      = require("./../controllers/places.controller.server");
-
-
-
-
-
+var stocks      = require("./../controllers/stocks.controller.server");
 
 router.get("/", function(req, res){
     //res.sendFile(("apiguide.html"), {root: "public"});
 });
+
+router.get("/stocks/:id", function(req, res){
+    stocks.lookup(req.params.id);
+    res.write("searching");
+    res.end();
+})
 
 /*
 router.get("/places/:id", function(req, res){
