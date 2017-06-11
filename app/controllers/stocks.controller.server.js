@@ -89,7 +89,7 @@ var path = "/finance/getprices?q=" + ticker + "&x=NASD&i="+ interval +"&p=1Y&f=d
 
 
           if(newStockObject.value != undefined){
-            console.log(newStockObject);
+            //console.log(newStockObject);
             var formattedArrayObject = [newStockObject.phpTime, newStockObject.value];
             //stockObjectArray.push(newStockObject);
             stockObjectArray.push(formattedArrayObject);
