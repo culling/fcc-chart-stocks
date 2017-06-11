@@ -6,14 +6,16 @@ class Graph extends React.Component{
     constructor(){
         super();
         this.state = {
-            graphSeriesData: []
+            graphSeriesData: [],
+            companyTickers: ["GOOG", "AKAM","AMZN", "AAPL"]
         }
     };
 
     componentWillMount(){
-
-        this._loadCompanyData("GOOG");
-        this._loadCompanyData("AAPL");        
+        this.state.companyTickers.map((companyTicker)=>{
+            this._loadCompanyData(companyTicker);
+        });
+        //this._loadCompanyData("AAPL");        
 
     }
 
@@ -54,7 +56,7 @@ class Graph extends React.Component{
 
 
     render(){
-        if(this.state.graphSeriesData.length > 0){
+        if(this.state.graphSeriesData.length == this.state.companyTickers.length){
         console.log(this.state.graphSeriesData);
 
             Highcharts.stockChart('stock-graph-reactRendered', {
@@ -69,6 +71,7 @@ class Graph extends React.Component{
                 series: this.state.graphSeriesData
             });
         }
+
     return(
         <div>
             <h3> Stock Graph React </h3>
