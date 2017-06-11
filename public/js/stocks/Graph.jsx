@@ -7,7 +7,7 @@ class Graph extends React.Component{
         super();
         this.state = {
             graphSeriesData: [],
-            companyTickers: ["GOOG", "AKAM","AMZN", "AAPL"]
+            companyTickers: ["GOOG", "AKAM","AMZN"]
         }
     };
 
@@ -15,9 +15,25 @@ class Graph extends React.Component{
         this.state.companyTickers.map((companyTicker)=>{
             this._loadCompanyData(companyTicker);
         });
-        //this._loadCompanyData("AAPL");        
+
+
+        socket.on('new state', function(newState) {
+            if (newState){
+            console.log(newState);
+
+            this.setState(newState);
+            console.log(this.state);
+            this.state.companyTickers.map((companyTicker)=>{
+                this._loadCompanyData(companyTicker);
+            });            
+            }
+        }.bind(this));
+
 
     }
+
+
+
 
     _loadCompanyData(companyID){
         jQuery.ajax({
@@ -27,7 +43,7 @@ class Graph extends React.Component{
 
                 var graphSeriesData = []
                 graphSeriesData = this.state.graphSeriesData.map((cd)=>{return cd});
-                console.log(graphSeriesData);
+                //console.log(graphSeriesData);
 
                 //console.log(rawResult);
                 var resultObject = JSON.parse(rawResult);
@@ -44,10 +60,10 @@ class Graph extends React.Component{
                     },
                     _colorIndex: (graphSeriesData.length)
                 }
-                //console.log(companyData);
+
 
                 graphSeriesData.push(companyData);
-                console.log(graphSeriesData);
+
                 this.setState({graphSeriesData: graphSeriesData});
             }
         });
@@ -56,9 +72,9 @@ class Graph extends React.Component{
 
 
     render(){
-        if(this.state.graphSeriesData.length == this.state.companyTickers.length){
-        console.log(this.state.graphSeriesData);
-
+        if(this.state.graphSeriesData.length != 0){
+        //console.log(this.state.graphSeriesData);
+            
             Highcharts.stockChart('stock-graph-reactRendered', {
                 rangeSelector: {
                     selected: 1

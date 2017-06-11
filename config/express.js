@@ -29,9 +29,11 @@ module.exports = function(){
 
         socket.on('new state', function (data) {
             console.log('server - statusChange');
-            socket.broadcast.emit('new state');
+            //socket.broadcast.emit('new state');
+            //io.sockets.emit('new state');
             console.log(data);
-            socket.broadcast.emit("new state", data);
+            //socket.broadcast.emit("new state", data);
+            io.sockets.emit("new state", data);
         });
 
         //Disconnect
