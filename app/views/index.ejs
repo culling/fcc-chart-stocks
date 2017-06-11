@@ -53,12 +53,14 @@
         var socket = io();
         </script>
         <!-- Custom -->
-        <script src="/js/SearchBar.js"      type="text/babel"></script>
         <!-- script src="/js/tonight.js" type="text/babel" ></script-->
         <!-- script src="/js/place/Card.jsx" type="text/babel"></script -->
         <!-- script src="/js/place/Place.jsx" type="text/babel" ></script -->
+        <script src="/js/stocks/StockContainer.jsx"  type="text/babel"></script>
 
-        <script src="/js/stocks/Graph.jsx"  type="text/babel"></script>
+        <script src="/js/SearchBar.js"      type="text/babel"></script>
+        <script src="/js/stocks/Graph.jsx"      type="text/babel"></script>
+        <script src="/js/stocks/StockCard.jsx"  type="text/babel"></script>
 
         
 
@@ -77,11 +79,14 @@
         <% } else { %>
             <%- include('./partials/navBar', {user: user}); %>        
         <% } %>
-< -->
+
+
         <div id="search-bar"></div>
 
         <div id="stock-graph-react"></div>
+< -->
 
+        <div id="stock-container"></div>
 
         </div>
 
