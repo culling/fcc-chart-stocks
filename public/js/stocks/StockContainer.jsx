@@ -3,16 +3,48 @@ class StockContainer extends React.Component{
         super();
         this.state = {
             graphSeriesData: [],
-            companyTickers: ["GOOG", "AKAM","AMZN"]
+            stocks: ["AKAM","AMZN", "GOOG"]
         }
     };
+
+
+
+    componentWillMount(){
+        socket.on('new state', function(newState) {
+            if (newState){
+
+            this.setState(newState);
+
+            }
+        }.bind(this));
+    }
+
+
+    _closeClick(stockToRemove){
+        event.preventDefault();
+        //console.log("Close Clicked for " + stockToRemove);
+        
+        //console.log(this.state);
+
+        var stocks =  this.state.stocks.filter(function(stock){return ( stock != stockToRemove)  });
+        console.log(stocks);
+
+        this.setState({stocks: stocks});
+
+    }
+
+
     render(){
+        console.log(this.state.stocks.length)
         return(
             <div>Stock Container
-                <div id="search-bar"></div>
+                <SearchBar stocks={this.state.stocks}  />
 
-                <div id="stock-graph-react"></div>
+                {this.state.stocks.map((stock, i) => 
+                    (<StockCard key={i} stock={stock} closeClick={this._closeClick.bind(this) } />)
+                )}
 
+                <Graph stocks={this.state.stocks} />
 
             </div>
         )

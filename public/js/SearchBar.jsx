@@ -6,11 +6,11 @@ $('document').ready(function() {
 
 
 class SearchBar extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
-            searchText: "Stock Market Ticker"
-            
+            searchText: "Stock Market Ticker",
+            stocks: this.props.stocks
         }
         this.defaultSearchLocation = "Stock Market Ticker";
     }
@@ -51,14 +51,28 @@ class SearchBar extends React.Component{
         //Set the value before submission unless it is the default text;
         console.log("Search Submitted")
 
+        event.preventDefault();
         var searchText = jQuery("#searchText").val();
-        if (searchText == ""){
-            console.log("searchText is blank");
-        }else{
-            this.networkSetState({companyTickers: [searchText]});
+
+        var alreadyExists = (this.props.stocks.indexOf(searchText) >= 0);
+
+
+        if(alreadyExists != true){
+            if (searchText == ""){
+                console.log("searchText is blank");
+            }else{
+                //console.log(this.state);
+                var stocks = this.state.stocks.map((stock)=>{
+                    return stock;
+                });
+                stocks.push(searchText);
+                //console.log(stocks);
+
+                this.networkSetState({stocks: stocks });
+                jQuery("#searchText").val("");
+            }
         }
 
-        event.preventDefault();
     }
 
 
@@ -87,6 +101,9 @@ class SearchBar extends React.Component{
 
 }
 
+
+/*
 ReactDOM.render (
     <SearchBar />, document.getElementById('search-bar')
 )
+*/

@@ -1,57 +1,52 @@
 console.log("Graph.js is Loaded");
-
 //$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
 
 class Graph extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             graphSeriesData: [],
-            companyTickers: ["GOOG", "AKAM","AMZN"]
+            stocks: this.props.stocks
         }
     };
 
     componentWillMount(){
-        this.state.companyTickers.map((companyTicker)=>{
-            this._loadCompanyData(companyTicker);
+        this.state.stocks.map((stock)=>{
+            this._loadCompanyData(stock);
         });
-
 
         socket.on('new state', function(newState) {
             if (newState){
-            console.log(newState);
-
-            this.setState(newState);
-            console.log(this.state);
-            this.state.companyTickers.map((companyTicker)=>{
-                this._loadCompanyData(companyTicker);
-            });            
+                this.setState(newState);
+                //console.log(this.state);
+                this.state.stocks.map((stock)=>{
+                    this._loadCompanyData(stock);
+                });
             }
         }.bind(this));
-
-
     }
 
-
-
-
     _loadCompanyData(companyID){
+        var graphSeriesStocks   = this.state.graphSeriesData.map((cd)=>{return cd.name});
+        console.log(graphSeriesStocks);
+        var alreadyExists = (graphSeriesStocks.indexOf(companyID) >= 0);
+
+
+        if(alreadyExists != true){
         jQuery.ajax({
             method: "GET",
             url:('/api/stocks/' + companyID),
             success: (rawResult)=> {
+                var graphSeriesData = [];
+                graphSeriesData     = this.state.graphSeriesData.map((cd)=>{return cd});
 
-                var graphSeriesData = []
-                graphSeriesData = this.state.graphSeriesData.map((cd)=>{return cd});
-                //console.log(graphSeriesData);
-
-                //console.log(rawResult);
                 var resultObject = JSON.parse(rawResult);
                 var resultsArray = [];
-                
+
                 for(var i = 0; i< resultObject.length; i++){
                     resultsArray.push(resultObject[i]);
-                }
+                };
+
                 var companyData = {
                     name: companyID,
                     data: resultsArray,
@@ -59,21 +54,20 @@ class Graph extends React.Component{
                         valueDecimals: 2
                     },
                     _colorIndex: (graphSeriesData.length)
-                }
-
+                };
 
                 graphSeriesData.push(companyData);
-
+                graphSeriesData = graphSeriesData.filter((thing) => {return thing});
+                //console.log(graphSeriesData);
                 this.setState({graphSeriesData: graphSeriesData});
             }
         });
-        
+        }
     }
 
 
     render(){
         if(this.state.graphSeriesData.length != 0){
-        //console.log(this.state.graphSeriesData);
             
             Highcharts.stockChart('stock-graph-reactRendered', {
                 rangeSelector: {
@@ -90,13 +84,9 @@ class Graph extends React.Component{
 
     return(
         <div>
-            <h3> Stock Graph React </h3>
             <div id="stock-graph-reactRendered"></div> 
         </div>
     )};
 
 }
 
-ReactDOM.render (
-    <Graph />, document.getElementById('stock-graph-react')
-)
