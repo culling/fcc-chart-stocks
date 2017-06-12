@@ -16,6 +16,16 @@ class SearchBar extends React.Component{
     }
 
     componentWillMount(){
+        socket.on('new state', function(newState) {
+            //if (newState){
+                console.log("NEW STATE IN SEARCH BAR");
+                this.setState(newState);
+                //console.log(this.state);
+                //this.state.stocks.map((stock)=>{
+                //    this._loadCompanyData(stock);
+                //});
+            //}
+        }.bind(this));        
     }
 
     //NETWORK Sync

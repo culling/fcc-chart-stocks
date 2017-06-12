@@ -16,13 +16,12 @@ class Graph extends React.Component{
         });
 
         socket.on('new state', function(newState) {
-            if (newState){
-                this.setState(newState);
-                //console.log(this.state);
-                this.state.stocks.map((stock)=>{
-                    this._loadCompanyData(stock);
-                });
-            }
+            this.setState({graphSeriesData: []});
+            this.setState(newState);
+            this.state.stocks.map((stock)=>{
+                this._loadCompanyData(stock);
+            });
+
         }.bind(this));
     }
 
@@ -67,7 +66,7 @@ class Graph extends React.Component{
 
 
     render(){
-        if(this.state.graphSeriesData.length != 0){
+        if(this.state.graphSeriesData.length == this.state.stocks.length){
             
             Highcharts.stockChart('stock-graph-reactRendered', {
                 rangeSelector: {

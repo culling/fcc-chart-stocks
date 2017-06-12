@@ -11,9 +11,9 @@ class StockCard extends React.Component{
         console.log(this.props.stock);
         return(
 
-            <div className="chipos">
+            <div className="chip">
                 {this.props.stock}
-                <button className="close material-icons" onClick={() => this.props.closeClick(this.props.stock)}>close</button>
+                <i className="material-icons" onClick={() => this.props.closeClick(this.props.stock)}>close</i>
             </div>
 
 
