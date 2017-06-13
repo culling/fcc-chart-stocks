@@ -1,16 +1,16 @@
 //Settings
 var config      = require("./config");
-var passport    = require("./passport");
+//var passport    = require("./passport");
 var mongo       = require("./mongo");
-var secrets     = require("./secrets");
+//var secrets     = require("./secrets");
 
 //Modules
 var http        = require('http');
 var express     = require("express");
 var socketio    = require('socket.io');
-var cookieParser    = require('cookie-parser');
-var expressSession  = require('express-session');
-var flash       = require("connect-flash");
+//var cookieParser    = require('cookie-parser');
+//var expressSession  = require('express-session');
+//var flash       = require("connect-flash");
 
 
 //express app
@@ -48,8 +48,8 @@ module.exports = function(){
     var bodyParser = require("body-parser");
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
-    app.use(cookieParser());
-    app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+    //app.use(cookieParser());
+    //app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
     //Passport    
     /*app.use(passport.initialize());
