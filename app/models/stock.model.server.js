@@ -32,8 +32,9 @@ exports.findAll = function(callback){
 
 exports.create = function(document, res){
     let stock = new Stock(document.ticker, document.exchange);
-
-
+    console.log("stock");
+    console.log(stock);
+    /*
             var db = mongo.connect(mongoUrl);
             mongo.connect(mongoUrl, function(err, db){
                 if(err){console.error(err)};
@@ -49,5 +50,5 @@ exports.create = function(document, res){
                     });
                 });
             });
-
+    */
 }

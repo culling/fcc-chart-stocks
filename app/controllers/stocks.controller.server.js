@@ -108,8 +108,14 @@ exports.lookup = function(ticker, callback){
 
 exports.create = function(document, callback){
   console.log("CREATE " )
-  console.log(document);
-  stocks.create(document);
+  var stocksList = document.body;
+  console.log(stocks);
+  for(var i = 0; i < stocksList.length; i++){
+    stock = {};
+    stock.ticker = stocksList[i];
+    console.log(stock);
+    stocks.create(stock);
+  }
 }
 
 exports.findAll = function(callback){

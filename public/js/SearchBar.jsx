@@ -44,14 +44,14 @@ class SearchBar extends React.Component{
     }
 
     saveStateToDB(newStateDiff) {
-        /*
-        jQuery.ajax({ url: '/api/guestList', 
+        
+        jQuery.ajax({ url: '/api/stocks', 
             contentType: 'application/json', // for request
             dataType: 'json', //for response
-            type: 'PUT',
+            type: 'POST',
             data: JSON.stringify(newStateDiff) 
         });
-        */
+        
         console.log(newStateDiff);
         console.log("Save to DB called");
     }

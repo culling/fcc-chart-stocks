@@ -28,9 +28,11 @@ router.get("/stocks/:id", function(req, res){
 })
 
 router.post("/stocks/", function(req, res){
+    //console.log(req);
     stocks.create(req, function(response){
-        console.log(response);
-    })
+        //console.log(response);
+    });
+    res.end();
 })
 
 router.get("/stocks/", function(req, res){
