@@ -16,7 +16,7 @@ class StockContainer extends React.Component{
                 url:("/api/stocks/"),
                 success: (rawResult)=>{
                     var resultObject = JSON.parse(rawResult);
-                    console.log(resultObject.length);
+                    //console.log(resultObject.length);
                     if(resultObject.length > 0){
                         var stocks = [];
                         for(var i = 0; i< resultObject.length; i++){
@@ -79,8 +79,10 @@ class StockContainer extends React.Component{
         console.log(this.state.stocks.length)
         return(
             <div>
-                <SearchBar stocks={this.state.stocks}  />
-
+                {(this.state.stocks.length > 0) &&            
+                    <SearchBar stocks={this.state.stocks} />
+                }
+                
                 <div className="row">
                     {this.state.stocks.map((stock, i) => 
                         (<StockCard key={i} stock={stock} closeClick={this._closeClick.bind(this) } />)

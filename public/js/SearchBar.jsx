@@ -1,30 +1,23 @@
 $('document').ready(function() {
     console.log("javascript Loaded");
-
 });
-
-
 
 class SearchBar extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            searchText: "Stock Market Ticker",
-            stocks: this.props.stocks
+            searchText: "Stock Market Ticker - NASD",
+            stocks: this.props.stocks,
+            testStocks: this.props.testStocks
         }
-        this.defaultSearchLocation = "Stock Market Ticker";
+        this.defaultSearchLocation = "Stock Market Ticker - NASD";
     }
 
     componentWillMount(){
         socket.on('new state', function(newState) {
-            //if (newState){
-                console.log("NEW STATE IN SEARCH BAR");
-                this.setState(newState);
-                //console.log(this.state);
-                //this.state.stocks.map((stock)=>{
-                //    this._loadCompanyData(stock);
-                //});
-            //}
+            console.log("NEW STATE IN SEARCH BAR");
+            this.setState(newState);
+
         }.bind(this));        
     }
 

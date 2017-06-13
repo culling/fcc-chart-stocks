@@ -1,5 +1,3 @@
-//   var markit = require('node-markitondemand');
- //var googleStocks = require('google-stocks');
 var http = require("http");
 var https = require("https");
 
@@ -7,10 +5,7 @@ var stocks = require("./../models/stock.model.server");
 
 exports.lookup = function(ticker, callback){
     console.log(ticker);
-  // var markit = require('node-markitondemand');
   //"https://www.google.com/finance/info?q=NASDAQ:AAPL"
-
-
   //https://www.google.com/finance/getprices?i=[PERIOD]&p=[DAYS]d&f=d,o,h,l,c,v&df=cpct&q=[TICKER]
   //https://www.google.com/intl/en/googlefinance/disclaimer/
 
@@ -70,35 +65,30 @@ exports.lookup = function(ticker, callback){
 
       for(var i = 0; i < lines.length; i++){
 
-        //var newDateBaseTimeLine;
-        //var newDateBaseTime = 0;
         if(lines[i][0] == "a" ) {
           var newDateBaseTimeLine = lines[i];
           var newDateBaseTime     = newDateBaseTimeLine.split(",")[0].replace("a","") ;
           var intervalNumber = 0;
-          //console.log(newDateBaseTime);
+
         }else{
           var intervalNumber = lines[i].split(",")[0];
         }
 
         if (newDateBaseTime){
           var newStockObject = {};
-          //
+
           newStockObject.unixTime   = (Number.parseInt(newDateBaseTime) + (intervalNumber * interval)) ;
           newStockObject.phpTime    = 1000 * newStockObject.unixTime;
           newStockObject.value  = Number.parseInt(lines[i].split(",")[1]);
 
 
           if(newStockObject.value != undefined){
-            //console.log(newStockObject);
             var formattedArrayObject = [newStockObject.phpTime, newStockObject.value];
-            //stockObjectArray.push(newStockObject);
             stockObjectArray.push(formattedArrayObject);
           }
         }
         
       }
-      //console.log(i);
 
       callback(stockObjectArray);
     });
@@ -107,12 +97,9 @@ exports.lookup = function(ticker, callback){
 }
 
 exports.update = function(document, callback){
-  console.log("UPDATE");
-
-  //console.log(document);
+//  console.log("UPDATE");
   stocks.drop();
   stocks.create(document);
-
 }
 
 exports.findAll = function(callback){
