@@ -24,8 +24,23 @@ router.get("/stocks/:id", function(req, res){
         //console.log(found);
         res.write( JSON.stringify(found,null,"\t") );
         res.end();
+    });
+})
+
+router.post("/stocks/", function(req, res){
+    stocks.create(req, function(response){
+        console.log(response);
+    })
+})
+
+router.get("/stocks/", function(req, res){
+    stocks.findAll(function(found){
+        //console.log(found);
+        res.write( JSON.stringify(found,null,"\t") );
+        res.end();
         
     });
+
 })
 
 /*

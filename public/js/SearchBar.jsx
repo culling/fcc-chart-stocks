@@ -52,6 +52,7 @@ class SearchBar extends React.Component{
             data: JSON.stringify(newStateDiff) 
         });
         */
+        console.log(newStateDiff);
         console.log("Save to DB called");
     }
     //End NETWORK Sync

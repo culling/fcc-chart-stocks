@@ -5,3 +5,4 @@
 //exports.polls    = require('./../app/models/poll.model.server');
 //exports.places  = require("./../app/models/place.model.server");
 //exports.guestList = require("./../app/models/guestList.model.server");
+exports.stock = require("./../app/models/stock.model.server");
