@@ -28,10 +28,16 @@ router.get("/stocks/:id", function(req, res){
 })
 
 router.post("/stocks/", function(req, res){
-    //console.log(req);
-    stocks.create(req, function(response){
-        //console.log(response);
+    //console.log("stocks");
+    //console.log(req.body.stocks);
+    var sentStocks = req.body.stocks;
+
+    sentStocks.map((stock)=>{
+        stocks.update(stock, function(response){
+            //console.log(response);
+        });
     });
+
     res.end();
 })
 
@@ -40,7 +46,6 @@ router.get("/stocks/", function(req, res){
         //console.log(found);
         res.write( JSON.stringify(found,null,"\t") );
         res.end();
-        
     });
 
 })

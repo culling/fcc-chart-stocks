@@ -106,16 +106,13 @@ exports.lookup = function(ticker, callback){
 
 }
 
-exports.create = function(document, callback){
-  console.log("CREATE " )
-  var stocksList = document.body;
-  console.log(stocks);
-  for(var i = 0; i < stocksList.length; i++){
-    stock = {};
-    stock.ticker = stocksList[i];
-    console.log(stock);
-    stocks.create(stock);
-  }
+exports.update = function(document, callback){
+  console.log("UPDATE");
+
+  //console.log(document);
+  stocks.drop();
+  stocks.create(document);
+
 }
 
 exports.findAll = function(callback){

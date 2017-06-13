@@ -27,7 +27,7 @@ class Graph extends React.Component{
 
     _loadCompanyData(companyID){
         var graphSeriesStocks   = this.state.graphSeriesData.map((cd)=>{return cd.name});
-        console.log(graphSeriesStocks);
+        //console.log(graphSeriesStocks);
         var alreadyExists = (graphSeriesStocks.indexOf(companyID) >= 0);
 
 

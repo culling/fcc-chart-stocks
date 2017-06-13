@@ -3,13 +3,34 @@ class StockContainer extends React.Component{
         super();
         this.state = {
             graphSeriesData: [],
-            stocks: ["AKAM","AMZN", "GOOG"]
+            stocks:[],
+            testStocks: ["AKAM","AMZN", "GOOG"]
         }
     };
 
 
 
     componentWillMount(){
+            jQuery.ajax({
+                method: 'GET',
+                url:("/api/stocks/"),
+                success: (rawResult)=>{
+                    var resultObject = JSON.parse(rawResult);
+                    console.log(resultObject.length);
+                    if(resultObject.length > 0){
+                        var stocks = [];
+                        for(var i = 0; i< resultObject.length; i++){
+                            stocks.push(resultObject[i].ticker);
+                        };
+                        console.log(stocks);
+                        this.setState({stocks: stocks});
+                    }else{
+                        this.setState({stocks: this.state.testStocks});
+                    }
+                }
+            });
+
+
         socket.on('new state', function(newState) {
             if (newState){
 
@@ -42,14 +63,12 @@ class StockContainer extends React.Component{
     }
 
     saveStateToDB(newStateDiff) {
-        /*
-        jQuery.ajax({ url: '/api/guestList', 
+        jQuery.ajax({ url: '/api/stocks', 
             contentType: 'application/json', // for request
             dataType: 'json', //for response
-            type: 'PUT',
+            type: 'POST',
             data: JSON.stringify(newStateDiff) 
         });
-        */
         console.log("Save to DB called");
     }
     //End NETWORK Sync
@@ -59,14 +78,18 @@ class StockContainer extends React.Component{
     render(){
         console.log(this.state.stocks.length)
         return(
-            <div>Stock Container
+            <div>
                 <SearchBar stocks={this.state.stocks}  />
+
                 <div className="row">
-                {this.state.stocks.map((stock, i) => 
-                    (<StockCard key={i} stock={stock} closeClick={this._closeClick.bind(this) } />)
-                )}
+                    {this.state.stocks.map((stock, i) => 
+                        (<StockCard key={i} stock={stock} closeClick={this._closeClick.bind(this) } />)
+                    )}
                 </div>
-                <Graph stocks={this.state.stocks} />
+
+                {this.state.stocks.length > 0 &&
+                    <Graph stocks={this.state.stocks} />
+                }
 
             </div>
         )
