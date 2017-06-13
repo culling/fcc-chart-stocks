@@ -7,8 +7,7 @@ class SearchBar extends React.Component{
         super(props);
         this.state={
             searchText: "Stock Market Ticker - NASD",
-            stocks: this.props.stocks,
-            testStocks: this.props.testStocks
+            stocks: this.props.stocks
         }
         this.defaultSearchLocation = "Stock Market Ticker - NASD";
     }
