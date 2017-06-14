@@ -33,9 +33,8 @@ class StockContainer extends React.Component{
 
         socket.on('new state', function(newState) {
             if (newState){
-
-            this.setState(newState);
-
+                console.log(newState);
+                this.setState(newState);
             }
         }.bind(this));
     }
@@ -43,7 +42,11 @@ class StockContainer extends React.Component{
 
     _closeClick(stockToRemove){
         var stocks =  this.state.stocks.filter(function(stock){return ( stock != stockToRemove)  });
-        //console.log(stocks);
+        console.log(stocks);
+        if (stocks.length == 0){
+            stocks = [];
+        }
+
         this.networkSetState({stocks: stocks});
     }
 
@@ -63,6 +66,7 @@ class StockContainer extends React.Component{
     }
 
     saveStateToDB(newStateDiff) {
+        console.log(newStateDiff);
         jQuery.ajax({ url: '/api/stocks', 
             contentType: 'application/json', // for request
             dataType: 'json', //for response

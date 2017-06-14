@@ -25,6 +25,7 @@ var findAll = function (callback){
         var collection = db.collection( collectionName );
         collection.find({}).toArray(function(err, documents) {
             if(err){console.error(err)};
+            //console.log(documents);
             callback(documents);
             db.close();
         });
@@ -47,11 +48,11 @@ var getByStockId = function (ticker, res){
                 console.log(result);
                 console.log("ticker found");
                 db.close();
-                return res(null, result);
+                //return res(null, result);
             }else{
                 console.log("didnt find ticker");
                 db.close();
-                return res(null, null );
+                //return res(null, null );
             }
         });
     });
@@ -59,12 +60,14 @@ var getByStockId = function (ticker, res){
 exports.getByStockId = getByStockId;
 
 
-exports.drop = function(document, res){
+exports.drop = function(done){
     var db = mongo.connect(mongoUrl);
     mongo.connect(mongoUrl, function(err, db){
         if(err){console.error(err)}
         var collection = db.collection( collectionName );
         collection.drop();
+        done();
+        
     });
 };
 
@@ -77,9 +80,9 @@ exports.create = function(document, res){
         var collection = db.collection( collectionName );
 
         collection.insertOne(stock, function(err){
-
+            db.close();
         });
 
-        db.close();
+
     });
 }

@@ -7,12 +7,13 @@ class SearchBar extends React.Component{
         super(props);
         this.state={
             searchText: "Stock Market Ticker - NASD",
-            stocks: this.props.stocks
+            stocks: []
         }
         this.defaultSearchLocation = "Stock Market Ticker - NASD";
     }
 
     componentWillMount(){
+        this.setState({stocks: this.props.stocks});
         socket.on('new state', function(newState) {
             console.log("NEW STATE IN SEARCH BAR");
             this.setState(newState);
@@ -60,7 +61,7 @@ class SearchBar extends React.Component{
         var alreadyExists = (this.props.stocks.indexOf(searchText) >= 0);
 
 
-        if(alreadyExists != true){
+        //if(alreadyExists != true){
             if (searchText == ""){
                 console.log("searchText is blank");
             }else{
@@ -69,12 +70,12 @@ class SearchBar extends React.Component{
                     return stock;
                 });
                 stocks.push(searchText);
-                //console.log(stocks);
+                console.log(stocks);
 
                 this.networkSetState({stocks: stocks });
                 jQuery("#searchText").val("");
             }
-        }
+        //}
 
     }
 

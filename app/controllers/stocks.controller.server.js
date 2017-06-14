@@ -97,9 +97,10 @@ exports.lookup = function(ticker, callback){
 }
 
 exports.update = function(document, callback){
-//  console.log("UPDATE");
-  stocks.drop();
-  stocks.create(document);
+  console.log("UPDATE");
+      stocks.drop(function(){
+        stocks.create(document);
+      });
 }
 
 exports.findAll = function(callback){
